@@ -7,8 +7,9 @@ Problem:
 
 <details>
   <summary>Solution</summary>
+
     ```scala
-    println("hello world)
+    println("hello world")
     ```
 </details>
 
