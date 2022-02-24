@@ -5,13 +5,14 @@ Problem:
 
 ```
 
-<details>
-  <summary>Solution</summary>
+<details><summary>Solution</summary>
 
-    ```scala
-    println("hello world")
-    ```
+```scala
+println("hello world")
+
+```
 </details>
+
 
 
 
