@@ -168,3 +168,72 @@ class MovingAverage(_size: Int) {
 Runtime: `O(N)` 
 
 </details>
+
+Problem:
+```
+You are given an m x n grid rooms initialized with these three possible values.
+
+-1 A wall or an obstacle.
+0 A gate.
+INF Infinity means an empty room. We use the value 231 - 1 = 2147483647 to represent INF as you may assume that the distance to a gate is less than 2147483647.
+Fill each empty room with the distance to its nearest gate. If it is impossible to reach a gate, it should be filled with INF.
+```
+
+```scala
+Input: rooms = [[2147483647,-1,0,2147483647],[2147483647,2147483647,2147483647,-1],[2147483647,-1,2147483647,-1],[0,-1,2147483647,2147483647]]
+Output: [[3,-1,0,1],[2,2,1,-1],[1,-1,2,-1],[0,-1,3,4]]
+```
+
+<details><summary>Pre-order</summary>
+
+```scala
+import scala.collection.mutable
+
+object Solution {
+  def wallsAndGates(rooms: Array[Array[Int]]): Unit = {
+    val rows = rooms.length -1
+    val cols = rooms(0).length -1
+    val visited = mutable.Set[(Int, Int)]()
+    val queue = mutable.Queue[(Int, Int)]()
+
+    def addRoom(r: Int, c:Int): Unit = {
+      if(r > rows || r < 0){ return }
+      if(c > cols || c < 0) { return }
+      if(visited.contains((r,c))){ return }
+      if(rooms(r)(c) == -1) { return }
+
+      visited.add((r,c))
+      queue.enqueue((r,c))
+    }
+
+    for(r <- 0 to rows){
+      for(c <- 0 to cols){
+        if(rooms(r)(c) == 0){
+          queue.enqueue((r,c))
+          visited.add((r,c))
+        }
+      }
+    }
+
+    var dist = 0
+    while (!queue.isEmpty){
+      for(i <- 0 to queue.length - 1 ){
+        var (r, c) = queue.dequeue()
+        rooms(r)(c) = dist
+
+        addRoom(r + 1, c)
+        addRoom(r - 1, c)
+        addRoom(r, c - 1)
+        addRoom(r, c + 1)
+      }
+
+      dist = dist + 1
+      
+    }
+  }
+}
+```
+
+Runtime: `O(N*M)` 
+
+</details>
